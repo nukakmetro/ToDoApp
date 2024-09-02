@@ -15,7 +15,7 @@ final class TasksPageViewController: UIViewController {
     private var cancellables: Set<AnyCancellable> = []
     private var days: [DayDisplay] = []
     private var viewModel: any TaskPageViewModeling
-    private var controllers: [CustomViewController<DateDisplay>]
+    private var controllers: [CustomViewController<DateDisplay, TaskDisplay>]
 
     private lazy var pageController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -23,16 +23,11 @@ final class TasksPageViewController: UIViewController {
 
     // MARK: Initialization
 
-    init(viewModel: any TaskPageViewModeling) {
+    init(viewModel: any TaskPageViewModeling, controllers: [CustomViewController<DateDisplay, TaskDisplay>]) {
         self.viewModel = viewModel
-        
-        let firstVC = DayViewBuilder().build()
-        let secondVC = DayViewBuilder().build()
-        let threeVC = DayViewBuilder().build()
-        controllers = [firstVC, secondVC, threeVC]
-        firstVC.view.tag = 0
-        secondVC.view.tag = 1
-        threeVC.view.tag = 2
+        viewModel.trigger(.willLoad)
+        self.controllers = controllers
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -68,7 +63,9 @@ final class TasksPageViewController: UIViewController {
     private func setupPageController() {
 
         for controller in controllers {
-
+            controller.processedTappedCell = { [weak self] task in
+                self?.viewModel.trigger(.processedTappedCell(task))
+            }
         }
         pageController.dataSource = self
         pageController.delegate = self
@@ -143,17 +140,16 @@ extension TasksPageViewController: UIPageViewControllerDelegate {
         if completed, let visibleViewController = pageViewController.viewControllers?.first {
             let newPageIndex = visibleViewController.view.tag
 
-            // Определение направления свайпа
             if newPageIndex == (currentPageIndex + 1) % controllers.count || (currentPageIndex == controllers.count - 1 && newPageIndex == 0) {
 
-                // Свайп вперед
                 var updateIndex = newPageIndex + 1
                 if updateIndex > 2 {
                     updateIndex = 0
                 }
                 viewModel.trigger(.processedScrolledForward(newPageIndex, updateIndex))
+
             } else {
-                // Свайп назад
+
                 var updateIndex = newPageIndex - 1
                 if updateIndex < 0 {
                     updateIndex = 2

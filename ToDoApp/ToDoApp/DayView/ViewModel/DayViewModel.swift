@@ -18,6 +18,7 @@ final class DayViewModel: DayViewModeling {
     private var coreDataManager: CoreDataManager
     private let dataMapper: DayDataMapper
     private var days: [TaskDisplay]
+    private var date: Date
 
     // MARK: Internal properties
 
@@ -31,6 +32,7 @@ final class DayViewModel: DayViewModeling {
 
     init(dataMapper: DayDataMapper = DayDataMapper(), coreData: CoreDataManager = CoreDataManager.shared) {
         self.days = []
+        self.date = Date()
         self.dataMapper = dataMapper
         self.coreDataManager = coreData
         self.stateDidChange = ObjectWillChangePublisher()
@@ -49,8 +51,12 @@ final class DayViewModel: DayViewModeling {
             getDay(date)
         case .processedTappedCompleted(let id, let index, let isCompleted):
             processedTappedIsCompleted(id, index, isCompleted)
+        case .processedTappedDelete(let id, let index):
+            processedTappedDelete(id, index)
         }
     }
+
+    // MARK: Private methods
 
     private func processedTappedIsCompleted(_ id: Int, _ index: Int, _ value: Bool) {
         coreDataManager.toggleCompleted(id) { [weak self] isCompleted in
@@ -67,34 +73,26 @@ final class DayViewModel: DayViewModeling {
 
     private func getDay(_ date: Date) {
         state = .loading
+        self.date = date
         coreDataManager.fetchTaskForDate(for: date) { [weak self] tasks in
             guard let self = self else { return }
             days = dataMapper.displayData(tasks: tasks)
-
             state = .content(display: days)
         }
     }
+    private func processedTappedDelete(_ id: Int, _ index: Int) {
+        state = .loading
+        coreDataManager.deleteTask(id: id) { [weak self] result in
+            guard let self = self else { return }
 
-    // MARK: Private methods
-//    private func processedTappedIsCompleted(_ id: Int, _ value: Bool, _ tag: Int) {
-//        state = .loading
-//        if let index = days[tag].tasks.firstIndex(where: { $0.id == id }) {
-//            var task = days[tag].tasks[index]
-//            task.isCompleted = value
-//            days[tag].tasks[index] = task
-//
-//            coreDataManager.toggleCompleted(id) { [weak self] result in
-//                guard
-//                    let self = self,
-//                    let result = result
-//                else  { return }
-//
-//                task.isCompleted = result
-//                self.days[tag].tasks[index] = task
-//
-//                state = .content(display: days)
-//            }
-//        }
-//    }
+            if result {
+                days.remove(at: index)
+                state = .content(display: days)
+            } else {
+                getDay(date)
+            }
+        }
+    }
+
 }
 

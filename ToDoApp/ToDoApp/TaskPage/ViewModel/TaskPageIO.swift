@@ -6,7 +6,7 @@
 //
 
 protocol TaskPageInput: AnyObject {
-    func processedSendTask(_ task: TaskDisplay)
+    func processedSendTask(_ task: TaskEntity)
 }
 
 protocol TaskPageOutput: AnyObject {

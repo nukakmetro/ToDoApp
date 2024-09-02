@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 protocol UserCoreData {
-    func createUser() -> UserModel 
+    func createUser() -> UserModel
     func fetchUser(id: Int, completion: @escaping (UserModel?) -> ())
     func setCurrentUser(user: UserModel)
 }
@@ -24,6 +24,8 @@ final class CoreDataManager: UserCoreData {
 
     private var currenUser: UserModel?
     private var users: Set<Int64> = []
+    private let defaultsSevice: UserDefaultsService<Int64>
+    private let taskService: UserDefaultsService<Int64>
 
     // MARK: - Core Data stack
 
@@ -38,6 +40,10 @@ final class CoreDataManager: UserCoreData {
     }()
 
     init() {
+        let encoder = JSONEncoder()
+        defaultsSevice = UserDefaultsService<Int64>("user", encoder: encoder)
+        taskService = UserDefaultsService<Int64>("task", encoder: encoder)
+
         dateTimeHelper = DateTimeHelper()
         let fetch = UserModel.fetchRequest()
         fetch.fetchLimit = 1
@@ -59,6 +65,8 @@ final class CoreDataManager: UserCoreData {
                 user.addToDays(day)
                 userModels.append(user)
             }
+
+            defaultsSevice.setAll(Set(users.keys))
             saveContext()
         }
     }
@@ -117,23 +125,33 @@ final class CoreDataManager: UserCoreData {
 
     func createUser(id: Int64) -> UserModel {
         let user = UserModel(context: viewContext)
-        users.insert(id)
         user.id = id
         return user
     }
 
     private func generateNextUserID() -> Int64 {
-        guard let maxID = users.max() else {
+        guard let maxID = defaultsSevice.get().max() else {
             return 1
         }
+        defaultsSevice.set(maxID + 1)
+
+        return maxID + 1
+    }
+
+    private func generateNextTaskID() -> Int64 {
+        guard let maxID = taskService.get().max() else {
+            return 1
+        }
+        taskService.set(maxID + 1)
+
         return maxID + 1
     }
 
     func createUser() -> UserModel {
         let user = UserModel(context: viewContext)
         let id = generateNextUserID()
-        users.insert(id)
         user.id = id
+        saveContext()
         return user
     }
 
@@ -142,6 +160,7 @@ final class CoreDataManager: UserCoreData {
         todos.forEach { todo in
             tasks.append(createTask(todo: todo))
         }
+
         return tasks
     }
 
@@ -152,13 +171,76 @@ final class CoreDataManager: UserCoreData {
         return day
     }
 
-    func createTask(todo: Todo) -> TaskModel {
+    private func createTask(todo: Todo) -> TaskModel {
         let task = TaskModel(context: viewContext)
         task.id = todo.id
         task.body = todo.todo
         task.dateCreated = dateTimeHelper.nowDate()
         task.isCompleted = todo.completed
+        taskService.set(task.id)
         return task
+    }
+
+    func updateTask(_ value: TaskEntity, completion: @escaping (TaskModel?, Date?) -> ()) {
+
+        DispatchQueue.global().async {
+            let fetch = TaskModel.fetchRequest()
+            fetch.predicate = NSPredicate(format: "id == %d", value.id)
+            let task = try? self.viewContext.fetch(fetch).first
+
+            guard
+                let _ = self.currenUser,
+                let task = task
+            else {
+                return DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
+            }
+            task.taskTime = value.isTime ? value.taskTime : nil
+            task.body = value.body
+            self.saveContext()
+
+            let fetchDay = Day.fetchRequest()
+            fetchDay.predicate = NSPredicate(format: "ANY tasks == %@", task)
+            let day = try? self.viewContext.fetch(fetchDay).first
+
+            DispatchQueue.main.async {
+                completion(task, day?.date)
+            }
+
+        }
+    }
+
+    func createTask(_ value: TaskEntity, completion: @escaping (TaskModel?, Date?) -> ()) {
+
+        DispatchQueue.global().async {
+            guard
+                let user = self.currenUser
+            else {
+                return DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
+            }
+            var day = user.days.first(where: { $0.date == self.dateTimeHelper.startOfDay(for: value.taskTime) })
+            if day == nil {
+                day = Day(context: self.viewContext)
+                day?.user = user
+                day?.date = self.dateTimeHelper.startOfDay(for: value.taskTime)
+            }
+
+            let task = TaskModel(context: self.viewContext)
+            task.dateCreated = Date()
+            task.body = value.body
+            task.isCompleted = false
+            task.id = self.generateNextTaskID()
+            task.taskTime = value.isTime ? value.taskTime : nil
+            day?.addToTasks(task)
+            self.saveContext()
+
+            DispatchQueue.main.async {
+                completion(task, day?.date)
+            }
+        }
     }
 
     func fetchUsers() -> [UserModel]? {
@@ -175,6 +257,27 @@ final class CoreDataManager: UserCoreData {
 
             DispatchQueue.main.async {
                 completion(user)
+            }
+        }
+    }
+
+    func deleteTask(id: Int, completion: @escaping (Bool) -> ()) {
+        DispatchQueue.global().async {
+            let fetch = TaskModel.fetchRequest()
+            fetch.predicate = NSPredicate(format: "id == %d", id)
+            let task = try? self.viewContext.fetch(fetch).first
+            guard
+                let user = self.currenUser,
+                let task = task
+            else {
+                return DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+            self.viewContext.delete(task)
+            self.saveContext()
+            DispatchQueue.main.async {
+                completion(true)
             }
         }
     }

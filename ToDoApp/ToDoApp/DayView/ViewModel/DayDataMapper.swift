@@ -32,8 +32,22 @@ final class DayDataMapper {
                                           taskTime: task.taskTime)
                 )
         }
-
-        return result
+        let sortedTasks = result.sorted { (task1, task2) -> Bool in
+            if task1.taskTime == nil && task2.taskTime != nil {
+                return true
+            } else if task1.taskTime != nil && task2.taskTime == nil {
+                return false
+            } else if let time1 = task1.taskTime, let time2 = task2.taskTime {
+                return time1 < time2
+            } else {
+                if let body1 = task1.body, let body2 = task2.body {
+                    return body1 < body2
+                } else {
+                    return task1.body != nil
+                }
+            }
+        }
+        return sortedTasks
     }
 
     private func optionalDateMapToTime(_ date: Date?) -> String? {
@@ -42,6 +56,9 @@ final class DayDataMapper {
 
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
+        if minute < 10 {
+            return "\(hour):0\(minute)"
+        }
         return "\(hour):\(minute)"
     }
 
@@ -50,6 +67,9 @@ final class DayDataMapper {
 
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
+        if minute < 10 {
+            return "\(hour):0\(minute)"
+        }
         return "\(hour):\(minute)"
     }
 

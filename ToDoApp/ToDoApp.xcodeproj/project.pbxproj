@@ -67,6 +67,11 @@
 		78C8EEC82C85213100515210 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEC72C85213100515210 /* CustomAlertController.swift */; };
 		78C8EECC2C85224A00515210 /* AuthorizationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EECB2C85224A00515210 /* AuthorizationBuilder.swift */; };
 		78C8EECF2C85282000515210 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EECE2C85282000515210 /* Extension+String.swift */; };
+		78C8EED52C85E25200515210 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EED42C85E25200515210 /* UserDefaultsService.swift */; };
+		78C8EED72C861E2000515210 /* TaskEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EED62C861E2000515210 /* TaskEntity.swift */; };
+		78C8EED92C8623A000515210 /* TaskViewDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EED82C8623A000515210 /* TaskViewDataMapper.swift */; };
+		78C8EEDC2C862E2800515210 /* TaskCreatedBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEDB2C862E2800515210 /* TaskCreatedBuilder.swift */; };
+		78C8EEDE2C862E3700515210 /* TaskChangedBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEDD2C862E3700515210 /* TaskChangedBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -144,6 +149,11 @@
 		78C8EEC72C85213100515210 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		78C8EECB2C85224A00515210 /* AuthorizationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationBuilder.swift; sourceTree = "<group>"; };
 		78C8EECE2C85282000515210 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
+		78C8EED42C85E25200515210 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
+		78C8EED62C861E2000515210 /* TaskEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEntity.swift; sourceTree = "<group>"; };
+		78C8EED82C8623A000515210 /* TaskViewDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewDataMapper.swift; sourceTree = "<group>"; };
+		78C8EEDB2C862E2800515210 /* TaskCreatedBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreatedBuilder.swift; sourceTree = "<group>"; };
+		78C8EEDD2C862E3700515210 /* TaskChangedBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskChangedBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				78C8EDDB2C7CAC0500515210 /* ToDoApp */,
-				78C8EDED2C7CAC0800515210 /* Info.plist */,
 				78C8EDDA2C7CAC0500515210 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -178,6 +187,8 @@
 		78C8EDDB2C7CAC0500515210 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				78C8EDED2C7CAC0800515210 /* Info.plist */,
+				78C8EE8C2C82551F00515210 /* TabBar */,
 				78C8EED02C854B9800515210 /* App */,
 				78C8EECD2C85280500515210 /* Extension */,
 				78C8EEC62C85211800515210 /* AlertView */,
@@ -189,7 +200,6 @@
 				78C8EE922C825B2E00515210 /* TaskView */,
 				78C8EE402C7E364E00515210 /* TaskPage */,
 				78C8EE8D2C82552E00515210 /* Coordinator */,
-				78C8EE8C2C82551F00515210 /* TabBar */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
@@ -256,7 +266,9 @@
 		78C8EE6B2C81F4AD00515210 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				78C8EE5A2C7E52C300515210 /* UserService.swift */,
 				78C8EE6C2C81F4C000515210 /* DateTimeHelper.swift */,
+				78C8EED42C85E25200515210 /* UserDefaultsService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -307,6 +319,8 @@
 				78C8EE942C825B4500515210 /* ViewModel */,
 				78C8EE932C825B4100515210 /* View */,
 				78C8EE9E2C82644F00515210 /* TaskViewBuilder.swift */,
+				78C8EEDB2C862E2800515210 /* TaskCreatedBuilder.swift */,
+				78C8EEDD2C862E3700515210 /* TaskChangedBuilder.swift */,
 			);
 			path = TaskView;
 			sourceTree = "<group>";
@@ -324,6 +338,8 @@
 			children = (
 				78C8EE952C825B5400515210 /* TaskViewModel.swift */,
 				78C8EE9C2C825BEE00515210 /* TaskIO.swift */,
+				78C8EED62C861E2000515210 /* TaskEntity.swift */,
+				78C8EED82C8623A000515210 /* TaskViewDataMapper.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -398,7 +414,6 @@
 		78C8EEB82C84EBAD00515210 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				78C8EE5A2C7E52C300515210 /* UserService.swift */,
 				78C8EEC02C84EC1A00515210 /* AuthorizationViewModel.swift */,
 				78C8EEC22C84ECBF00515210 /* AuthorizationIO.swift */,
 			);
@@ -536,6 +551,7 @@
 				78C8EEAB2C83564500515210 /* DayState.swift in Sources */,
 				78C8EE992C825B8E00515210 /* TaskIntent.swift in Sources */,
 				78C8EE962C825B5400515210 /* TaskViewModel.swift in Sources */,
+				78C8EEDE2C862E3700515210 /* TaskChangedBuilder.swift in Sources */,
 				78C8EE552C7E4A8B00515210 /* UserModel+CoreDataClass.swift in Sources */,
 				78C8EEBF2C84EC0E00515210 /* AuthorizationViewController.swift in Sources */,
 				78C8EEC12C84EC1A00515210 /* AuthorizationViewModel.swift in Sources */,
@@ -560,11 +576,13 @@
 				78C8EECF2C85282000515210 /* Extension+String.swift in Sources */,
 				78C8EE002C7D41C400515210 /* AppCoordinator.swift in Sources */,
 				78C8EEC52C85204200515210 /* AuthorizationCoordinator.swift in Sources */,
+				78C8EEDC2C862E2800515210 /* TaskCreatedBuilder.swift in Sources */,
 				78C8EDDD2C7CAC0500515210 /* AppDelegate.swift in Sources */,
 				78C8EE432C7E367800515210 /* ViewModel.swift in Sources */,
 				78C8EE9D2C825BEE00515210 /* TaskIO.swift in Sources */,
 				78C8EEBD2C84EBFB00515210 /* AuthorizationIntent.swift in Sources */,
 				78C8EEC32C84ECBF00515210 /* AuthorizationIO.swift in Sources */,
+				78C8EED92C8623A000515210 /* TaskViewDataMapper.swift in Sources */,
 				78C8EE5F2C7E95CF00515210 /* DayEntity.swift in Sources */,
 				78C8EE282C7DF87600515210 /* Bundle-Decodable.swift in Sources */,
 				78C8EDDF2C7CAC0500515210 /* SceneDelegate.swift in Sources */,
@@ -573,6 +591,8 @@
 				78C8EE5D2C7E945000515210 /* TaskPageDataMapper.swift in Sources */,
 				78C8EDE72C7CAC0500515210 /* ToDoApp.xcdatamodeld in Sources */,
 				78C8EEB52C84C02D00515210 /* CustomViewController.swift in Sources */,
+				78C8EED52C85E25200515210 /* UserDefaultsService.swift in Sources */,
+				78C8EED72C861E2000515210 /* TaskEntity.swift in Sources */,
 				78C8EE3F2C7E364C00515210 /* TaskPageViewModel.swift in Sources */,
 				78C8EDFC2C7D414C00515210 /* DayViewController.swift in Sources */,
 			);

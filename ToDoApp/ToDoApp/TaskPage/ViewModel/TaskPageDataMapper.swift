@@ -27,6 +27,7 @@ struct TaskDisplay: Hashable {
 struct DateDisplay: Hashable {
     var date: Date
     var dateString: String
+    var update: Bool
 }
 
 final class TaskPageDataMapper {
@@ -76,6 +77,10 @@ final class TaskPageDataMapper {
         ]
     }
 
+    func getStartOfDay(for date: Date) -> Date {
+        dateTimeHelper.startOfDay(for: date)
+    }
+
     func displayDateTomorrow(for date: Date) -> DateDisplay {
         let date = dateTimeHelper.tomorrow(for: date)
         return mapToDateDisplay(for: date)
@@ -87,6 +92,6 @@ final class TaskPageDataMapper {
     }
 
     private func mapToDateDisplay(for date: Date) -> DateDisplay {
-        DateDisplay(date: date, dateString: dateMapToString(date: date))
+        DateDisplay(date: date, dateString: dateMapToString(date: date), update: true)
     }
 }

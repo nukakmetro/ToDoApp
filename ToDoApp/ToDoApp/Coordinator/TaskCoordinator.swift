@@ -28,24 +28,34 @@ final class TaskCoordinator: Coordinator {
         navigationController?.pushViewController(controller, animated: false)
     }
 
-    private func showTaskView() {
-        let controller = TaskBuilder(output: self).build()
+    private func showTaskCreatedView() {
+        let controller = TaskCreatedBuilder(output: self).build()
         navigationController?.modalPresentationStyle = .pageSheet
         navigationController?.present(controller, animated: true)
     }
 
+    private func showTaskChangedView() {
+        let controller = TaskChangedBuilder(output: self).build()
+        navigationController?.modalPresentationStyle = .pageSheet
+        navigationController?.present(controller, animated: true)
+    }
+
+    private func popView() {
+        navigationController?.popViewController(animated: false)
+    }
 }
 
 //MARK: - TaskPageOutput
 
 extension TaskCoordinator: TaskPageOutput {
     func processedTappedCell(task: TaskDisplay) {
-
+        showTaskChangedView()
+        taskInput?.processedSendTask(task)
     }
     
     func processedTappedCreate(task: TaskDisplay) {
+        showTaskCreatedView()
         taskInput?.processedSendTask(task)
-        showTaskView()
     }
     
     func moduleLoad(input: TaskPageInput) {
@@ -56,6 +66,11 @@ extension TaskCoordinator: TaskPageOutput {
 //MARK: - TaskOutput
 
 extension TaskCoordinator: TaskOutput {
+    func processedTappedButton(_ value: TaskEntity) {
+        popView()
+        taskPageInput?.processedSendTask(value)
+    }
+    
     func moduleLoad(input: TaskInput) {
         taskInput = input
     }

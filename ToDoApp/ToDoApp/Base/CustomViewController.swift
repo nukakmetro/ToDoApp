@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomViewController<T>: UICollectionViewController {
+class CustomViewController<T, value>: UIViewController {
     func configure(_ data: T) {}
+    var processedTappedCell: ((value) -> ())?
 }

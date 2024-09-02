@@ -50,7 +50,7 @@ final class TaskPageViewModel: TaskPageViewModeling {
             state = .loading
             days = dataMapper.displayData()
             state = .content(display: days)
-
+            resetUpdate()
         case .processedScrolledBack(let index, let backIndex):
             scrolledBack(index, backIndex)
 
@@ -61,8 +61,8 @@ final class TaskPageViewModel: TaskPageViewModeling {
 
         case .processedTappedAddButton:
             output?.processedTappedCreate(task: TaskDisplay(id: 0, isCompleted: false, dateCreatedString: "", dateCreated: Date()))
-        case .processedTappedCell(_):
-            break
+        case .processedTappedCell(let task):
+            output?.processedTappedCell(task: task)
         }
     }
 
@@ -73,6 +73,7 @@ final class TaskPageViewModel: TaskPageViewModeling {
         let dayDisplay = dataMapper.displayDateTomorrow(for: days[index].date)
         days[nextIndex] = dayDisplay
         state = .content(display: days)
+        days[nextIndex].update = false
     }
 
     private func scrolledBack(_ index: Int, _ backIndex: Int) {
@@ -81,13 +82,49 @@ final class TaskPageViewModel: TaskPageViewModeling {
         days[backIndex] = dayDisplay
 
         state = .content(display: days)
+        days[backIndex].update = false
+
+    }
+
+    private func resetUpdate() {
+        var i = 0
+        while i < days.count {
+            days[i].update = false
+            i += 1
+        }
     }
 }
 
 // MARK: - TaskPageInput
 
 extension TaskPageViewModel: TaskPageInput {
-    func processedSendTask(_ task: TaskDisplay) {
 
+    func processedSendTask(_ task: TaskEntity) {
+        state = .loading
+
+        if task.id == 0 {
+            coreDataManager.createTask(task) { [weak self] _, date in
+                self?.update(date: date)
+            }
+        } else {
+            coreDataManager.updateTask(task) { [weak self] _, date in
+                self?.update(date: date)
+            }
+        }
     }
+
+    private func update(date: Date?) {
+        guard let date = date else { return }
+        var i = 0
+        while i < 3 {
+            if days[i].date == dataMapper.getStartOfDay(for: date) {
+                days[i].update = true
+                state = .content(display: days)
+                days[i].update = false
+                break
+            }
+            i += 1
+        }
+    }
+
 }

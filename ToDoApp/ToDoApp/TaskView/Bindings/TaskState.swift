@@ -7,6 +7,11 @@
 
 enum TaskState {
     case loading
-    case content(display: DayDisplay)
+    case content(display: TaskEntity)
     case error
+}
+
+enum TaskConf {
+    case save
+    case change
 }

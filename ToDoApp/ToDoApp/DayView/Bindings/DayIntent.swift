@@ -11,4 +11,5 @@ enum DayIntent {
     case willLoad
     case onLoad(_ date: Date)
     case processedTappedCompleted(_ id: Int, _ index: Int, _ isCompleted: Bool)
+    case processedTappedDelete(_ id: Int, _ index: Int)
 }

@@ -14,5 +14,5 @@ enum TaskPageIntent {
     case processedScrolledForward(_ index: Int, _ nextIndex: Int)
     case processedTappedCompletedButton(_ id: Int, _ value: Bool, _ tag: Int)
     case processedTappedAddButton
-    case processedTappedCell(_ tag: Int)
+    case processedTappedCell(_ task: TaskDisplay)
 }

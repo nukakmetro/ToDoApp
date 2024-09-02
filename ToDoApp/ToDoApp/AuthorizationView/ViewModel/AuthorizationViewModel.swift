@@ -77,8 +77,5 @@ final class AuthorizationViewModel: AuthorizationViewModeling {
 // MARK: - AuthorizationInput
 
 extension AuthorizationViewModel: AuthorizationInput {
-
-    func processedAlertTappedOk() {
-        output?.processedUserAuthorizated()
-    }
+    
 }

@@ -15,8 +15,7 @@ final class AuthorizationCoordinator: Coordinator {
     
     weak var delegate: ChangeCoordinator?
     weak var navigationController: UINavigationController?
-    weak var authorizationInput: AuthorizationInput?
-    
+
     init(navigationController: UINavigationController, delegate: ChangeCoordinator) {
         self.navigationController = navigationController
         self.delegate = delegate
@@ -32,6 +31,7 @@ final class AuthorizationCoordinator: Coordinator {
         let controller = AuthorizationBuilder(output: self).build()
         navigationController?.pushViewController(controller, animated: false)
     }
+    
     private func stop() {
         delegate?.closeCoordinator()
     }
@@ -42,7 +42,6 @@ final class AuthorizationCoordinator: Coordinator {
 extension AuthorizationCoordinator: AuthorizationOutput {
 
     func moduleLoad(input: AuthorizationInput) {
-        authorizationInput = input
     }
     
     func processedUserAuthorizated() {
@@ -51,8 +50,6 @@ extension AuthorizationCoordinator: AuthorizationOutput {
     
     func processedShowAlert(_ id: String) {
         guard let controller = navigationController?.topViewController else { return }
-        CustomAlertController.showAlertWithOk(on: controller, title: "Создан новый пользвоатель", message: "Id: " + id) {
-            self.authorizationInput?.processedAlertTappedOk()
-        }
+        CustomAlertController.showAlertWithOk(on: controller, title: "Создан новый пользвоатель", message: "Id: " + id)
     }
 }

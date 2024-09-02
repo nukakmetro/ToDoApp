@@ -6,7 +6,6 @@
 //
 
 protocol AuthorizationInput: AnyObject {
-    func processedAlertTappedOk()
 }
 
 protocol AuthorizationOutput: AnyObject {

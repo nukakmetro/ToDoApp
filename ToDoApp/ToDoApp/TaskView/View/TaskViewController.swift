@@ -12,12 +12,14 @@ final class TaskViewController: UIViewController {
 
     private let viewModel: any TaskViewModeling
     private var cancellables: Set<AnyCancellable> = []
-    private lazy var body = UILabel()
+    private lazy var textView = UITextView()
     private lazy var timePicker = UIDatePicker()
-    private lazy var timeLabel = UILabel()
+    private lazy var button = UIButton()
+    private lazy var isTimeButton = UIButton()
 
     init(viewModel: any TaskViewModeling) {
         self.viewModel = viewModel
+        viewModel.trigger(.willLoad)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -28,10 +30,8 @@ final class TaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "Color")
-        setupTimePicker()
-        setupLabel()
-        setupConstraint()
-
+        setupView()
+        configureIO()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,46 +61,116 @@ final class TaskViewController: UIViewController {
         case .loading:
             break
         case .content(let dispayData):
-            break
+            configurationView(dispayData)
+
         case .error:
-            break
+            dismiss(animated: true)
         }
+    }
+
+    private func setupView() {
+        setupTimePicker()
+        setupButton()
+        setupIsTimeButton()
+        setupTextField()
+        setupConstraint()
+    }
+
+    private func configurationView(_ dispayData: TaskEntity) {
+        textView.text = dispayData.body
+        changeIsTimeButton(dispayData.isTime)
+        timePicker.date = dispayData.taskTime
     }
 
     private func setupTimePicker() {
         timePicker.datePickerMode = .dateAndTime
         timePicker.preferredDatePickerStyle = .compact
         timePicker.tintColor = .black
+        timePicker.locale = .autoupdatingCurrent
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         timePicker.addTarget(self, action: #selector(timeChanged(_:)), for: .valueChanged)
-
     }
 
-    private func setupLabel() {
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        timeLabel.textColor = UIColor.label
+    private func setupTextField() {
+        textView.textColor = .black
+        textView.font = UIFont.systemFont(ofSize: 17)
+        textView.isEditable = true
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.autocapitalizationType = .none
+        textView.layer.borderColor = UIColor.black.cgColor
+        textView.layer.borderWidth = 1.0
 
+        textView
     }
-    
+
+    private func setupIsTimeButton() {
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            viewModel.trigger(.processedTappedIsTimeButton)
+        }
+        isTimeButton.addAction(action, for: .touchUpInside)
+        isTimeButton.translatesAutoresizingMaskIntoConstraints = false
+        isTimeButton.layer.cornerRadius = 2
+        isTimeButton.clipsToBounds = true
+        isTimeButton.layer.borderColor = UIColor.black.cgColor
+        isTimeButton.layer.borderWidth = 2.0
+        isTimeButton.tintColor = .systemGreen
+    }
+
+    private func setupButton() {
+        button.configuration = .filled()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let action = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            if textView.text.count > 0 {
+                viewModel.trigger(.processedTappedButton(textView.text))
+            }
+        }
+        button.addAction(action, for: .touchUpInside)
+    }
+
     private func setupConstraint() {
         view.addSubview(timePicker)
-        view.addSubview(timeLabel)
+        view.addSubview(button)
+        view.addSubview(isTimeButton)
+        view.addSubview(textView)
+
         NSLayoutConstraint.activate([
-            timePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            timePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
+            isTimeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            isTimeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
+            isTimeButton.heightAnchor.constraint(equalToConstant: 20),
+            isTimeButton.widthAnchor.constraint(equalToConstant: 20),
+
+            timePicker.leadingAnchor.constraint(equalTo: isTimeButton.trailingAnchor, constant: 10),
+            timePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+
+            textView.topAnchor.constraint(equalTo: timePicker.bottomAnchor, constant: 40),
+            textView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            textView.heightAnchor.constraint(equalToConstant: 100),
+            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
-    @objc private func timeChanged(_ sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short // Форматирование времени
-        let selectedTime = timeFormatter.string(from: sender.date)
-        print("Выбранное время: \(selectedTime)")
+    private func changeIsTimeButton(_ isTime: Bool) {
+        let image = isTime ? UIImage(systemName: "checkmark") : nil
+        isTimeButton.setImage(image, for: .normal)
+        timePicker.isUserInteractionEnabled = isTime
     }
 
-    func configureView(_ display: TaskDisplay) {
-        timePicker.date = display.taskTime ?? Date()
+    @objc private func timeChanged(_ sender: UIDatePicker) {
+        viewModel.trigger(.processedChangeTime(sender.date))
+    }
 
+    func configure(_ value: String?) {
+        if value == nil {
+            button.setTitle("Кнопка", for: .normal)
+        } else {
+            button.setTitle(value, for: .normal)
+        }
     }
 }
 

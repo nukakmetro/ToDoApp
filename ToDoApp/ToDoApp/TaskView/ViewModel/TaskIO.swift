@@ -11,5 +11,5 @@ protocol TaskInput: AnyObject {
 
 protocol TaskOutput: AnyObject {
     func moduleLoad(input: TaskInput)
-
+    func processedTappedButton(_ value: TaskEntity)
 }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class DayViewCell: UICollectionViewCell {
+final class DayViewCell: UITableViewCell {
 
     // MARK: Internal static properties
 
@@ -28,10 +28,10 @@ final class DayViewCell: UICollectionViewCell {
 
     // MARK: Initialization
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        setupContsraint()
+        setupConstraints()
         setupSubviews()
     }
     
@@ -39,7 +39,7 @@ final class DayViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupContsraint() {
+    private func setupConstraints() {
         completedButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(completedButton)
 
@@ -58,12 +58,11 @@ final class DayViewCell: UICollectionViewCell {
             completedButton.heightAnchor.constraint(equalToConstant: 20),
             completedButton.widthAnchor.constraint(equalToConstant: 20),
 
-            taskTime.topAnchor.constraint(equalTo: completedButton.bottomAnchor, constant: -10),
             taskTime.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            taskTime.widthAnchor.constraint(equalToConstant: 40),
+            taskTime.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
 
             bodyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            bodyLabel.leadingAnchor.constraint(equalTo: taskTime.trailingAnchor, constant: 20),
+            bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 60),
             bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
 
             dateCreated.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
@@ -101,8 +100,8 @@ final class DayViewCell: UICollectionViewCell {
     }
 
     private func setupLabel() {
-        bodyLabel.numberOfLines = 2
-        taskTime.numberOfLines = 2
+        bodyLabel.numberOfLines = 0
+        bodyLabel.lineBreakMode = .byWordWrapping
         bodyLabel.textColor = .black
         taskTime.textColor = .black
     }
@@ -114,7 +113,7 @@ final class DayViewCell: UICollectionViewCell {
 
     func configure(task: TaskDisplay) {
         setupCompetedBodyColor(task.isCompleted)
-        dateCreated.text = task.dateCreatedString
+        dateCreated.text = "Create " + task.dateCreatedString
         taskTime.text = task.taskTimeString
         bodyLabel.text = task.body
         taskId = task.id

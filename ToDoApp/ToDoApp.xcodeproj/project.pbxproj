@@ -9,15 +9,10 @@
 /* Begin PBXBuildFile section */
 		78C8EDDD2C7CAC0500515210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDDC2C7CAC0500515210 /* AppDelegate.swift */; };
 		78C8EDDF2C7CAC0500515210 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDDE2C7CAC0500515210 /* SceneDelegate.swift */; };
-		78C8EDE12C7CAC0500515210 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDE02C7CAC0500515210 /* ViewController.swift */; };
-		78C8EDE42C7CAC0500515210 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 78C8EDE32C7CAC0500515210 /* Base */; };
 		78C8EDE72C7CAC0500515210 /* ToDoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDE52C7CAC0500515210 /* ToDoApp.xcdatamodeld */; };
 		78C8EDE92C7CAC0800515210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78C8EDE82C7CAC0800515210 /* Assets.xcassets */; };
 		78C8EDEC2C7CAC0800515210 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 78C8EDEB2C7CAC0800515210 /* Base */; };
-		78C8EDF82C7CAFB800515210 /* MainViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDF72C7CAFB800515210 /* MainViewInteractor.swift */; };
-		78C8EDFA2C7CB01A00515210 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDF92C7CB01A00515210 /* MainViewPresenter.swift */; };
 		78C8EDFC2C7D414C00515210 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDFB2C7D414B00515210 /* DayViewController.swift */; };
-		78C8EDFE2C7D417400515210 /* DayTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDFD2C7D417400515210 /* DayTasks.swift */; };
 		78C8EE002C7D41C400515210 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EDFF2C7D41C400515210 /* AppCoordinator.swift */; };
 		78C8EE022C7D427000515210 /* TaskPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE012C7D427000515210 /* TaskPageController.swift */; };
 		78C8EE262C7DF7DC00515210 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE252C7DF7DC00515210 /* CoreDataManager.swift */; };
@@ -34,25 +29,68 @@
 		78C8EE562C7E4A8B00515210 /* UserModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE502C7E4A8B00515210 /* UserModel+CoreDataProperties.swift */; };
 		78C8EE572C7E4A8B00515210 /* TaskModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE512C7E4A8B00515210 /* TaskModel+CoreDataClass.swift */; };
 		78C8EE582C7E4A8B00515210 /* TaskModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE522C7E4A8B00515210 /* TaskModel+CoreDataProperties.swift */; };
-		78C8EE5B2C7E52C300515210 /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE5A2C7E52C300515210 /* AuthorizationService.swift */; };
+		78C8EE5B2C7E52C300515210 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE5A2C7E52C300515210 /* UserService.swift */; };
 		78C8EE5D2C7E945000515210 /* TaskPageDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE5C2C7E945000515210 /* TaskPageDataMapper.swift */; };
 		78C8EE5F2C7E95CF00515210 /* DayEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE5E2C7E95CF00515210 /* DayEntity.swift */; };
+		78C8EE662C7FD33C00515210 /* DayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE652C7FD33C00515210 /* DayViewCell.swift */; };
+		78C8EE6A2C81F1B100515210 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE692C81F1B100515210 /* Month.swift */; };
+		78C8EE6D2C81F4C000515210 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE6C2C81F4C000515210 /* DateTimeHelper.swift */; };
+		78C8EE6F2C82098B00515210 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE6E2C82098B00515210 /* ChartView.swift */; };
+		78C8EE792C820D0800515210 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 78C8EE782C820D0800515210 /* DGCharts */; };
+		78C8EE7D2C8245A300515210 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE7C2C8245A300515210 /* TaskViewController.swift */; };
+		78C8EE7F2C82480F00515210 /* TaskCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE7E2C82480F00515210 /* TaskCoordinator.swift */; };
+		78C8EE812C824CB100515210 /* TaskPageIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE802C824CB100515210 /* TaskPageIO.swift */; };
+		78C8EE832C824E7500515210 /* TaskPageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE822C824E7500515210 /* TaskPageBuilder.swift */; };
+		78C8EE852C82546200515210 /* TabBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE842C82546200515210 /* TabBarBuilder.swift */; };
+		78C8EE872C82548B00515210 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE862C82548B00515210 /* Builder.swift */; };
+		78C8EE892C8254B600515210 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE882C8254B600515210 /* TabBarController.swift */; };
+		78C8EE8B2C8254E300515210 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE8A2C8254E200515210 /* Coordinator.swift */; };
+		78C8EE912C8255C300515210 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE902C8255C300515210 /* CoordinatorFactory.swift */; };
+		78C8EE962C825B5400515210 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE952C825B5400515210 /* TaskViewModel.swift */; };
+		78C8EE992C825B8E00515210 /* TaskIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE982C825B8E00515210 /* TaskIntent.swift */; };
+		78C8EE9B2C825B9500515210 /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE9A2C825B9500515210 /* TaskState.swift */; };
+		78C8EE9D2C825BEE00515210 /* TaskIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE9C2C825BEE00515210 /* TaskIO.swift */; };
+		78C8EE9F2C82644F00515210 /* TaskViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EE9E2C82644F00515210 /* TaskViewBuilder.swift */; };
+		78C8EEA72C83560A00515210 /* DayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEA62C83560A00515210 /* DayViewModel.swift */; };
+		78C8EEA92C83563C00515210 /* DayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEA82C83563C00515210 /* DayIntent.swift */; };
+		78C8EEAB2C83564500515210 /* DayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEAA2C83564500515210 /* DayState.swift */; };
+		78C8EEAD2C83566F00515210 /* DayViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEAC2C83566F00515210 /* DayViewBuilder.swift */; };
+		78C8EEB12C83780B00515210 /* DayDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEB02C83780B00515210 /* DayDataMapper.swift */; };
+		78C8EEB32C83AACA00515210 /* DayIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEB22C83AACA00515210 /* DayIO.swift */; };
+		78C8EEB52C84C02D00515210 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEB42C84C02D00515210 /* CustomViewController.swift */; };
+		78C8EEBB2C84EBE900515210 /* AuthorizationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEBA2C84EBE900515210 /* AuthorizationState.swift */; };
+		78C8EEBD2C84EBFB00515210 /* AuthorizationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEBC2C84EBFB00515210 /* AuthorizationIntent.swift */; };
+		78C8EEBF2C84EC0E00515210 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEBE2C84EC0E00515210 /* AuthorizationViewController.swift */; };
+		78C8EEC12C84EC1A00515210 /* AuthorizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEC02C84EC1A00515210 /* AuthorizationViewModel.swift */; };
+		78C8EEC32C84ECBF00515210 /* AuthorizationIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEC22C84ECBF00515210 /* AuthorizationIO.swift */; };
+		78C8EEC52C85204200515210 /* AuthorizationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEC42C85204200515210 /* AuthorizationCoordinator.swift */; };
+		78C8EEC82C85213100515210 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EEC72C85213100515210 /* CustomAlertController.swift */; };
+		78C8EECC2C85224A00515210 /* AuthorizationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EECB2C85224A00515210 /* AuthorizationBuilder.swift */; };
+		78C8EECF2C85282000515210 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8EECE2C85282000515210 /* Extension+String.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		78C8EE762C820B2B00515210 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		78C8EDD92C7CAC0500515210 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C8EDDC2C7CAC0500515210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78C8EDDE2C7CAC0500515210 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		78C8EDE02C7CAC0500515210 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		78C8EDE32C7CAC0500515210 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		78C8EDE62C7CAC0500515210 /* ToDoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoApp.xcdatamodel; sourceTree = "<group>"; };
 		78C8EDE82C7CAC0800515210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78C8EDEB2C7CAC0800515210 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78C8EDED2C7CAC0800515210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		78C8EDF72C7CAFB800515210 /* MainViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewInteractor.swift; sourceTree = "<group>"; };
-		78C8EDF92C7CB01A00515210 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		78C8EDFB2C7D414B00515210 /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
-		78C8EDFD2C7D417400515210 /* DayTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTasks.swift; sourceTree = "<group>"; };
 		78C8EDFF2C7D41C400515210 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		78C8EE012C7D427000515210 /* TaskPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageController.swift; sourceTree = "<group>"; };
 		78C8EE252C7DF7DC00515210 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -69,9 +107,43 @@
 		78C8EE502C7E4A8B00515210 /* UserModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		78C8EE512C7E4A8B00515210 /* TaskModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		78C8EE522C7E4A8B00515210 /* TaskModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		78C8EE5A2C7E52C300515210 /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		78C8EE5A2C7E52C300515210 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		78C8EE5C2C7E945000515210 /* TaskPageDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageDataMapper.swift; sourceTree = "<group>"; };
 		78C8EE5E2C7E95CF00515210 /* DayEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEntity.swift; sourceTree = "<group>"; };
+		78C8EE652C7FD33C00515210 /* DayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewCell.swift; sourceTree = "<group>"; };
+		78C8EE692C81F1B100515210 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		78C8EE6C2C81F4C000515210 /* DateTimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
+		78C8EE6E2C82098B00515210 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		78C8EE7C2C8245A300515210 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		78C8EE7E2C82480F00515210 /* TaskCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCoordinator.swift; sourceTree = "<group>"; };
+		78C8EE802C824CB100515210 /* TaskPageIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageIO.swift; sourceTree = "<group>"; };
+		78C8EE822C824E7500515210 /* TaskPageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageBuilder.swift; sourceTree = "<group>"; };
+		78C8EE842C82546200515210 /* TabBarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBuilder.swift; sourceTree = "<group>"; };
+		78C8EE862C82548B00515210 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		78C8EE882C8254B600515210 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		78C8EE8A2C8254E200515210 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		78C8EE902C8255C300515210 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
+		78C8EE952C825B5400515210 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		78C8EE982C825B8E00515210 /* TaskIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIntent.swift; sourceTree = "<group>"; };
+		78C8EE9A2C825B9500515210 /* TaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskState.swift; sourceTree = "<group>"; };
+		78C8EE9C2C825BEE00515210 /* TaskIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIO.swift; sourceTree = "<group>"; };
+		78C8EE9E2C82644F00515210 /* TaskViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewBuilder.swift; sourceTree = "<group>"; };
+		78C8EEA62C83560A00515210 /* DayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewModel.swift; sourceTree = "<group>"; };
+		78C8EEA82C83563C00515210 /* DayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayIntent.swift; sourceTree = "<group>"; };
+		78C8EEAA2C83564500515210 /* DayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayState.swift; sourceTree = "<group>"; };
+		78C8EEAC2C83566F00515210 /* DayViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewBuilder.swift; sourceTree = "<group>"; };
+		78C8EEB02C83780B00515210 /* DayDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataMapper.swift; sourceTree = "<group>"; };
+		78C8EEB22C83AACA00515210 /* DayIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayIO.swift; sourceTree = "<group>"; };
+		78C8EEB42C84C02D00515210 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		78C8EEBA2C84EBE900515210 /* AuthorizationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationState.swift; sourceTree = "<group>"; };
+		78C8EEBC2C84EBFB00515210 /* AuthorizationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationIntent.swift; sourceTree = "<group>"; };
+		78C8EEBE2C84EC0E00515210 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		78C8EEC02C84EC1A00515210 /* AuthorizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewModel.swift; sourceTree = "<group>"; };
+		78C8EEC22C84ECBF00515210 /* AuthorizationIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationIO.swift; sourceTree = "<group>"; };
+		78C8EEC42C85204200515210 /* AuthorizationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationCoordinator.swift; sourceTree = "<group>"; };
+		78C8EEC72C85213100515210 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
+		78C8EECB2C85224A00515210 /* AuthorizationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationBuilder.swift; sourceTree = "<group>"; };
+		78C8EECE2C85282000515210 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78C8EE792C820D0800515210 /* DGCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				78C8EDDB2C7CAC0500515210 /* ToDoApp */,
+				78C8EDED2C7CAC0800515210 /* Info.plist */,
 				78C8EDDA2C7CAC0500515210 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,49 +178,29 @@
 		78C8EDDB2C7CAC0500515210 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
-				78C8EE592C7E529800515210 /* AuthorizationModule */,
+				78C8EED02C854B9800515210 /* App */,
+				78C8EECD2C85280500515210 /* Extension */,
+				78C8EEC62C85211800515210 /* AlertView */,
+				78C8EEB62C84EB9A00515210 /* AuthorizationView */,
+				78C8EE6B2C81F4AD00515210 /* Helpers */,
 				78C8EE412C7E367000515210 /* Base */,
 				78C8EE072C7D441400515210 /* CoreData */,
-				78C8EDF62C7CAF9000515210 /* Interactor */,
-				78C8EDF52C7CAF7B00515210 /* Presenter */,
-				78C8EDDC2C7CAC0500515210 /* AppDelegate.swift */,
-				78C8EDDE2C7CAC0500515210 /* SceneDelegate.swift */,
-				78C8EDE02C7CAC0500515210 /* ViewController.swift */,
-				78C8EDE22C7CAC0500515210 /* Main.storyboard */,
-				78C8EDE82C7CAC0800515210 /* Assets.xcassets */,
-				78C8EDEA2C7CAC0800515210 /* LaunchScreen.storyboard */,
-				78C8EDED2C7CAC0800515210 /* Info.plist */,
-				78C8EDE52C7CAC0500515210 /* ToDoApp.xcdatamodeld */,
-				78C8EDFD2C7D417400515210 /* DayTasks.swift */,
-				78C8EDFF2C7D41C400515210 /* AppCoordinator.swift */,
+				78C8EEA22C8355C400515210 /* DayView */,
+				78C8EE922C825B2E00515210 /* TaskView */,
 				78C8EE402C7E364E00515210 /* TaskPage */,
+				78C8EE8D2C82552E00515210 /* Coordinator */,
+				78C8EE8C2C82551F00515210 /* TabBar */,
 			);
 			path = ToDoApp;
-			sourceTree = "<group>";
-		};
-		78C8EDF52C7CAF7B00515210 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				78C8EDF92C7CB01A00515210 /* MainViewPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		78C8EDF62C7CAF9000515210 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				78C8EDF72C7CAFB800515210 /* MainViewInteractor.swift */,
-			);
-			path = Interactor;
 			sourceTree = "<group>";
 		};
 		78C8EE072C7D441400515210 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				78C8EDE52C7CAC0500515210 /* ToDoApp.xcdatamodeld */,
 				78C8EE3D2C7E08D600515210 /* Model */,
 				78C8EE2B2C7DF92800515210 /* todos.json */,
 				78C8EE252C7DF7DC00515210 /* CoreDataManager.swift */,
-				78C8EE272C7DF87600515210 /* Bundle-Decodable.swift */,
 				78C8EE292C7DF8E300515210 /* ParseService.swift */,
 				78C8EE5E2C7E95CF00515210 /* DayEntity.swift */,
 			);
@@ -169,11 +223,10 @@
 		78C8EE402C7E364E00515210 /* TaskPage */ = {
 			isa = PBXGroup;
 			children = (
+				78C8EE8F2C82554E00515210 /* ViewModel */,
+				78C8EE8E2C82554A00515210 /* View */,
 				78C8EE482C7E36E700515210 /* Bindings */,
-				78C8EE012C7D427000515210 /* TaskPageController.swift */,
-				78C8EDFB2C7D414B00515210 /* DayViewController.swift */,
-				78C8EE3E2C7E364C00515210 /* TaskPageViewModel.swift */,
-				78C8EE5C2C7E945000515210 /* TaskPageDataMapper.swift */,
+				78C8EE822C824E7500515210 /* TaskPageBuilder.swift */,
 			);
 			path = TaskPage;
 			sourceTree = "<group>";
@@ -181,7 +234,12 @@
 		78C8EE412C7E367000515210 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				78C8EE272C7DF87600515210 /* Bundle-Decodable.swift */,
+				78C8EE692C81F1B100515210 /* Month.swift */,
 				78C8EE422C7E367800515210 /* ViewModel.swift */,
+				78C8EE862C82548B00515210 /* Builder.swift */,
+				78C8EE8A2C8254E200515210 /* Coordinator.swift */,
+				78C8EEB42C84C02D00515210 /* CustomViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -195,12 +253,192 @@
 			path = Bindings;
 			sourceTree = "<group>";
 		};
-		78C8EE592C7E529800515210 /* AuthorizationModule */ = {
+		78C8EE6B2C81F4AD00515210 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				78C8EE5A2C7E52C300515210 /* AuthorizationService.swift */,
+				78C8EE6C2C81F4C000515210 /* DateTimeHelper.swift */,
 			);
-			path = AuthorizationModule;
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		78C8EE8C2C82551F00515210 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE882C8254B600515210 /* TabBarController.swift */,
+				78C8EE842C82546200515210 /* TabBarBuilder.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		78C8EE8D2C82552E00515210 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EDFF2C7D41C400515210 /* AppCoordinator.swift */,
+				78C8EE7E2C82480F00515210 /* TaskCoordinator.swift */,
+				78C8EE902C8255C300515210 /* CoordinatorFactory.swift */,
+				78C8EEC42C85204200515210 /* AuthorizationCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		78C8EE8E2C82554A00515210 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE6E2C82098B00515210 /* ChartView.swift */,
+				78C8EE012C7D427000515210 /* TaskPageController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78C8EE8F2C82554E00515210 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE802C824CB100515210 /* TaskPageIO.swift */,
+				78C8EE5C2C7E945000515210 /* TaskPageDataMapper.swift */,
+				78C8EE3E2C7E364C00515210 /* TaskPageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		78C8EE922C825B2E00515210 /* TaskView */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE972C825B7600515210 /* Bindings */,
+				78C8EE942C825B4500515210 /* ViewModel */,
+				78C8EE932C825B4100515210 /* View */,
+				78C8EE9E2C82644F00515210 /* TaskViewBuilder.swift */,
+			);
+			path = TaskView;
+			sourceTree = "<group>";
+		};
+		78C8EE932C825B4100515210 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE7C2C8245A300515210 /* TaskViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78C8EE942C825B4500515210 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE952C825B5400515210 /* TaskViewModel.swift */,
+				78C8EE9C2C825BEE00515210 /* TaskIO.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		78C8EE972C825B7600515210 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE982C825B8E00515210 /* TaskIntent.swift */,
+				78C8EE9A2C825B9500515210 /* TaskState.swift */,
+			);
+			path = Bindings;
+			sourceTree = "<group>";
+		};
+		78C8EEA22C8355C400515210 /* DayView */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEA52C8355DB00515210 /* Bindings */,
+				78C8EEA42C8355D100515210 /* ViewModel */,
+				78C8EEA32C8355CE00515210 /* View */,
+				78C8EEAC2C83566F00515210 /* DayViewBuilder.swift */,
+			);
+			path = DayView;
+			sourceTree = "<group>";
+		};
+		78C8EEA32C8355CE00515210 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EDFB2C7D414B00515210 /* DayViewController.swift */,
+				78C8EE652C7FD33C00515210 /* DayViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78C8EEA42C8355D100515210 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEB02C83780B00515210 /* DayDataMapper.swift */,
+				78C8EEA62C83560A00515210 /* DayViewModel.swift */,
+				78C8EEB22C83AACA00515210 /* DayIO.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		78C8EEA52C8355DB00515210 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEA82C83563C00515210 /* DayIntent.swift */,
+				78C8EEAA2C83564500515210 /* DayState.swift */,
+			);
+			path = Bindings;
+			sourceTree = "<group>";
+		};
+		78C8EEB62C84EB9A00515210 /* AuthorizationView */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEB92C84EBB300515210 /* Bindings */,
+				78C8EEB82C84EBAD00515210 /* ViewModel */,
+				78C8EEB72C84EBA700515210 /* View */,
+				78C8EECB2C85224A00515210 /* AuthorizationBuilder.swift */,
+			);
+			path = AuthorizationView;
+			sourceTree = "<group>";
+		};
+		78C8EEB72C84EBA700515210 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEBE2C84EC0E00515210 /* AuthorizationViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78C8EEB82C84EBAD00515210 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EE5A2C7E52C300515210 /* UserService.swift */,
+				78C8EEC02C84EC1A00515210 /* AuthorizationViewModel.swift */,
+				78C8EEC22C84ECBF00515210 /* AuthorizationIO.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		78C8EEB92C84EBB300515210 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEBA2C84EBE900515210 /* AuthorizationState.swift */,
+				78C8EEBC2C84EBFB00515210 /* AuthorizationIntent.swift */,
+			);
+			path = Bindings;
+			sourceTree = "<group>";
+		};
+		78C8EEC62C85211800515210 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EEC72C85213100515210 /* CustomAlertController.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		78C8EECD2C85280500515210 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EECE2C85282000515210 /* Extension+String.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		78C8EED02C854B9800515210 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				78C8EDDC2C7CAC0500515210 /* AppDelegate.swift */,
+				78C8EDDE2C7CAC0500515210 /* SceneDelegate.swift */,
+				78C8EDE82C7CAC0800515210 /* Assets.xcassets */,
+				78C8EDEA2C7CAC0800515210 /* LaunchScreen.storyboard */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +451,7 @@
 				78C8EDD52C7CAC0500515210 /* Sources */,
 				78C8EDD62C7CAC0500515210 /* Frameworks */,
 				78C8EDD72C7CAC0500515210 /* Resources */,
+				78C8EE762C820B2B00515210 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -220,6 +459,7 @@
 			);
 			name = ToDoApp;
 			packageProductDependencies = (
+				78C8EE782C820D0800515210 /* DGCharts */,
 			);
 			productName = ToDoApp;
 			productReference = 78C8EDD92C7CAC0500515210 /* ToDoApp.app */;
@@ -250,6 +490,7 @@
 			);
 			mainGroup = 78C8EDD02C7CAC0500515210;
 			packageReferences = (
+				78C8EE772C820D0800515210 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 78C8EDDA2C7CAC0500515210 /* Products */;
 			projectDirPath = "";
@@ -267,7 +508,6 @@
 			files = (
 				78C8EDE92C7CAC0800515210 /* Assets.xcassets in Resources */,
 				78C8EDEC2C7CAC0800515210 /* Base in Resources */,
-				78C8EDE42C7CAC0500515210 /* Base in Resources */,
 				78C8EE2C2C7DF92800515210 /* todos.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,30 +519,60 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78C8EDE12C7CAC0500515210 /* ViewController.swift in Sources */,
 				78C8EE2A2C7DF8E300515210 /* ParseService.swift in Sources */,
-				78C8EE5B2C7E52C300515210 /* AuthorizationService.swift in Sources */,
+				78C8EE5B2C7E52C300515210 /* UserService.swift in Sources */,
 				78C8EE262C7DF7DC00515210 /* CoreDataManager.swift in Sources */,
+				78C8EE662C7FD33C00515210 /* DayViewCell.swift in Sources */,
+				78C8EE7D2C8245A300515210 /* TaskViewController.swift in Sources */,
 				78C8EE532C7E4A8B00515210 /* Day+CoreDataClass.swift in Sources */,
+				78C8EE812C824CB100515210 /* TaskPageIO.swift in Sources */,
+				78C8EE872C82548B00515210 /* Builder.swift in Sources */,
+				78C8EE8B2C8254E300515210 /* Coordinator.swift in Sources */,
+				78C8EE832C824E7500515210 /* TaskPageBuilder.swift in Sources */,
+				78C8EEB32C83AACA00515210 /* DayIO.swift in Sources */,
 				78C8EE542C7E4A8B00515210 /* Day+CoreDataProperties.swift in Sources */,
+				78C8EEC82C85213100515210 /* CustomAlertController.swift in Sources */,
+				78C8EEA72C83560A00515210 /* DayViewModel.swift in Sources */,
+				78C8EEAB2C83564500515210 /* DayState.swift in Sources */,
+				78C8EE992C825B8E00515210 /* TaskIntent.swift in Sources */,
+				78C8EE962C825B5400515210 /* TaskViewModel.swift in Sources */,
 				78C8EE552C7E4A8B00515210 /* UserModel+CoreDataClass.swift in Sources */,
+				78C8EEBF2C84EC0E00515210 /* AuthorizationViewController.swift in Sources */,
+				78C8EEC12C84EC1A00515210 /* AuthorizationViewModel.swift in Sources */,
+				78C8EE9B2C825B9500515210 /* TaskState.swift in Sources */,
+				78C8EE9F2C82644F00515210 /* TaskViewBuilder.swift in Sources */,
+				78C8EE6A2C81F1B100515210 /* Month.swift in Sources */,
+				78C8EEA92C83563C00515210 /* DayIntent.swift in Sources */,
+				78C8EE6F2C82098B00515210 /* ChartView.swift in Sources */,
 				78C8EE562C7E4A8B00515210 /* UserModel+CoreDataProperties.swift in Sources */,
+				78C8EE6D2C81F4C000515210 /* DateTimeHelper.swift in Sources */,
+				78C8EE852C82546200515210 /* TabBarBuilder.swift in Sources */,
 				78C8EE572C7E4A8B00515210 /* TaskModel+CoreDataClass.swift in Sources */,
+				78C8EE7F2C82480F00515210 /* TaskCoordinator.swift in Sources */,
+				78C8EE892C8254B600515210 /* TabBarController.swift in Sources */,
+				78C8EEB12C83780B00515210 /* DayDataMapper.swift in Sources */,
 				78C8EE582C7E4A8B00515210 /* TaskModel+CoreDataProperties.swift in Sources */,
+				78C8EEAD2C83566F00515210 /* DayViewBuilder.swift in Sources */,
+				78C8EE912C8255C300515210 /* CoordinatorFactory.swift in Sources */,
 				78C8EE022C7D427000515210 /* TaskPageController.swift in Sources */,
 				78C8EE4C2C7E370800515210 /* TaskPageState.swift in Sources */,
-				78C8EDFE2C7D417400515210 /* DayTasks.swift in Sources */,
+				78C8EECC2C85224A00515210 /* AuthorizationBuilder.swift in Sources */,
+				78C8EECF2C85282000515210 /* Extension+String.swift in Sources */,
 				78C8EE002C7D41C400515210 /* AppCoordinator.swift in Sources */,
+				78C8EEC52C85204200515210 /* AuthorizationCoordinator.swift in Sources */,
 				78C8EDDD2C7CAC0500515210 /* AppDelegate.swift in Sources */,
 				78C8EE432C7E367800515210 /* ViewModel.swift in Sources */,
-				78C8EDFA2C7CB01A00515210 /* MainViewPresenter.swift in Sources */,
+				78C8EE9D2C825BEE00515210 /* TaskIO.swift in Sources */,
+				78C8EEBD2C84EBFB00515210 /* AuthorizationIntent.swift in Sources */,
+				78C8EEC32C84ECBF00515210 /* AuthorizationIO.swift in Sources */,
 				78C8EE5F2C7E95CF00515210 /* DayEntity.swift in Sources */,
 				78C8EE282C7DF87600515210 /* Bundle-Decodable.swift in Sources */,
 				78C8EDDF2C7CAC0500515210 /* SceneDelegate.swift in Sources */,
 				78C8EE4A2C7E36F900515210 /* TaskPageIntent.swift in Sources */,
+				78C8EEBB2C84EBE900515210 /* AuthorizationState.swift in Sources */,
 				78C8EE5D2C7E945000515210 /* TaskPageDataMapper.swift in Sources */,
 				78C8EDE72C7CAC0500515210 /* ToDoApp.xcdatamodeld in Sources */,
-				78C8EDF82C7CAFB800515210 /* MainViewInteractor.swift in Sources */,
+				78C8EEB52C84C02D00515210 /* CustomViewController.swift in Sources */,
 				78C8EE3F2C7E364C00515210 /* TaskPageViewModel.swift in Sources */,
 				78C8EDFC2C7D414C00515210 /* DayViewController.swift in Sources */,
 			);
@@ -311,14 +581,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		78C8EDE22C7CAC0500515210 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				78C8EDE32C7CAC0500515210 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		78C8EDEA2C7CAC0800515210 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -527,6 +789,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		78C8EE772C820D0800515210 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78C8EE782C820D0800515210 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78C8EE772C820D0800515210 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		78C8EDE52C7CAC0500515210 /* ToDoApp.xcdatamodeld */ = {

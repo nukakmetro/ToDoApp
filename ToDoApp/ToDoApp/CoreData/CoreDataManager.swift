@@ -8,14 +8,22 @@
 import Foundation
 import CoreData
 
-final class CoreDataManager {
-    static let shared = CoreDataManager()
+protocol UserCoreData {
+    func createUser() -> UserModel 
+    func fetchUser(id: Int, completion: @escaping (UserModel?) -> ())
+    func setCurrentUser(user: UserModel)
+}
 
+final class CoreDataManager: UserCoreData {
+
+    static let shared = CoreDataManager()
+    private let dateTimeHelper: DateTimeHelper
     var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
 
     private var currenUser: UserModel?
+    private var users: Set<Int64> = []
 
     // MARK: - Core Data stack
 
@@ -30,10 +38,11 @@ final class CoreDataManager {
     }()
 
     init() {
+        dateTimeHelper = DateTimeHelper()
         let fetch = UserModel.fetchRequest()
         fetch.fetchLimit = 1
-
         let result = try? viewContext.fetch(fetch)
+
         if result?.count == 0 {
             let todos = ParseService().parseTodo()
             var users: [Int64: [Todo]] = [:]
@@ -50,7 +59,6 @@ final class CoreDataManager {
                 user.addToDays(day)
                 userModels.append(user)
             }
-
             saveContext()
         }
     }
@@ -69,8 +77,62 @@ final class CoreDataManager {
         }
     }
 
+    func deleteAllData() {
+        let entities = persistentContainer.managedObjectModel.entities
+        entities.compactMap({ $0.name }).forEach { entityName in
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+            do {
+                try viewContext.execute(batchDeleteRequest)
+                saveContext()
+            } catch {
+                print("Failed to delete entity \(entityName): \(error)")
+            }
+        }
+    }
+
+    func toggleCompleted(_ taskId: Int, completion: @escaping (Bool?) -> ()) {
+        let fetchRequest: NSFetchRequest<TaskModel> = TaskModel.fetchRequest()
+        fetchRequest.fetchLimit = 1
+
+        fetchRequest.predicate = NSPredicate(format: "id == %d", Int64(taskId))
+        DispatchQueue.global().async {
+            do {
+                let tasks = try self.viewContext.fetch(fetchRequest)
+                let task = tasks.first
+                task?.isCompleted.toggle()
+                self.saveContext()
+                DispatchQueue.main.async {
+                    completion(task?.isCompleted)
+                }
+            } catch {
+                print("Error fetching task: \(error)")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+    }
+
     func createUser(id: Int64) -> UserModel {
         let user = UserModel(context: viewContext)
+        users.insert(id)
+        user.id = id
+        return user
+    }
+
+    private func generateNextUserID() -> Int64 {
+        guard let maxID = users.max() else {
+            return 1
+        }
+        return maxID + 1
+    }
+
+    func createUser() -> UserModel {
+        let user = UserModel(context: viewContext)
+        let id = generateNextUserID()
+        users.insert(id)
         user.id = id
         return user
     }
@@ -85,7 +147,7 @@ final class CoreDataManager {
 
     func createDay(for user: UserModel) -> Day {
         let day = Day(context: viewContext)
-        day.date = Calendar.current.startOfDay(for: Date())
+        day.date = dateTimeHelper.getStartNowDate()
         day.user = user
         return day
     }
@@ -94,53 +156,37 @@ final class CoreDataManager {
         let task = TaskModel(context: viewContext)
         task.id = todo.id
         task.body = todo.todo
-        task.dateCreated = Date()
+        task.dateCreated = dateTimeHelper.nowDate()
         task.isCompleted = todo.completed
         return task
     }
 
-    func fetchTasksForDay(for date: Date) {
-
-    }
     func fetchUsers() -> [UserModel]? {
         let fetch = UserModel.fetchRequest()
         let users = try? viewContext.fetch(fetch)
         return users
     }
 
-    func fetchUser(id: Int) -> UserModel? {
-        let fetch = UserModel.fetchRequest()
-        let user = try? viewContext.fetch(fetch).first(where: { $0.id == Int64(id) })
-        return user
+    func fetchUser(id: Int, completion: @escaping (UserModel?) -> ()) {
+        DispatchQueue.global().async {
+            let fetch = UserModel.fetchRequest()
+            fetch.predicate = NSPredicate(format: "id == %d", id)
+            let user = try? self.viewContext.fetch(fetch).first
+
+            DispatchQueue.main.async {
+                completion(user)
+            }
+        }
     }
 
     func setCurrentUser(user: UserModel) {
         currenUser = user
     }
 
-    func fetchTaskForYTT(for date: Date) -> ([DayEntity]) {
-        let calendar = Calendar.current
-        let today = date
+    // MARK: Time and date queries
 
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: today) ?? Date(timeIntervalSinceNow: -86400)
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) ?? Date(timeIntervalSinceNow: 86400)
-        var tasksForYesterday = DayEntity(date: yesterday, tasks: [])
-        var tasksForToday = DayEntity(date: today, tasks:  [])
-        var tasksForTomorrow = DayEntity(date: tomorrow, tasks: [])
-        guard let user = currenUser else { return [tasksForYesterday, tasksForToday, tasksForTomorrow] }
-        tasksForYesterday.tasks.append(contentsOf: fetchTasks(user: user, for: today))
-        tasksForToday.tasks.append(contentsOf: fetchTasks(user: user, for: yesterday))
-        tasksForTomorrow.tasks.append(contentsOf: fetchTasks(user: user, for: tomorrow))
-
-
-        return [tasksForYesterday, tasksForToday, tasksForTomorrow]
-    }
-    
     func fetchTasks(user: UserModel, for date: Date) -> [TaskModel] {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
-
+        let startOfDay = dateTimeHelper.startOfDay(for: date)
         let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
 
         fetchRequest.predicate = NSPredicate(format: "date == %@ AND user == %@", startOfDay as NSDate, user)
@@ -154,9 +200,35 @@ final class CoreDataManager {
         }
     }
 
+    func fetchTaskForDate(for date: Date, completion: @escaping ([TaskModel]) ->()) {
+        DispatchQueue.global().async {
+            guard let user = self.currenUser else {
+                return DispatchQueue.main.async {
+                    completion([])
+                }
+            }
+            let startOfDay = self.dateTimeHelper.startOfDay(for: date)
+            let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
+
+            fetchRequest.predicate = NSPredicate(format: "date == %@ AND user == %@", startOfDay as NSDate, user)
+
+            do {
+                let result = try self.viewContext.fetch(fetchRequest).first?.tasks ?? []
+                let tasksArray = Array(result)
+                DispatchQueue.main.async {
+                    completion(tasksArray)
+                }
+            } catch {
+                print("Error fetching tasks: \(error)")
+                DispatchQueue.main.async {
+                    completion([])
+                }
+            }
+        }
+    }
+
     func fetchAfterDay(for today: Date) -> DayEntity {
-        let calendar = Calendar.current
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) ?? Date(timeIntervalSinceNow: 86400)
+        let tomorrow = dateTimeHelper.tomorrow(for: today)
         var dayEntity = DayEntity(date: tomorrow, tasks: [])
         guard let user = currenUser else { return DayEntity(date: tomorrow, tasks: []) }
 
@@ -167,8 +239,7 @@ final class CoreDataManager {
     }
 
     func fetchBeforeDay(for today: Date) -> DayEntity {
-        let calendar = Calendar.current
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: today) ?? Date(timeIntervalSinceNow: -86400)
+        let yesterday = dateTimeHelper.yesterday(for: today)
         var dayEntity = DayEntity(date: yesterday, tasks: [])
 
         guard let user = currenUser else { return dayEntity }
@@ -177,5 +248,4 @@ final class CoreDataManager {
 
         return dayEntity
     }
-
 }

@@ -9,6 +9,6 @@ import Foundation
 
 enum TaskPageState {
     case loading
-    case content(display: [DayDisplay])
+    case content(display: [DateDisplay])
     case error
 }

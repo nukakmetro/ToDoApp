@@ -74,12 +74,23 @@ final class DayViewModel: DayViewModeling {
     private func getDay(_ date: Date) {
         state = .loading
         self.date = date
-        coreDataManager.fetchTaskForDate(for: date) { [weak self] tasks in
+        coreDataManager.asyncFetchTaskForDate(for: date) { [weak self] result in
             guard let self = self else { return }
-            days = dataMapper.displayData(tasks: tasks)
-            state = .content(display: days)
+            switch result {
+
+            case .success(let tasks):
+                days = dataMapper.displayData(tasks: tasks)
+                DispatchQueue.main.async {
+                    self.state = .content(display: self.days)
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.state = .error
+                }
+            }
         }
     }
+
     private func processedTappedDelete(_ id: Int, _ index: Int) {
         state = .loading
         self.coreDataManager.asyncDeleteTask(id: id) { [weak self] result in

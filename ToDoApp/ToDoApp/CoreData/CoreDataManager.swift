@@ -10,6 +10,7 @@ import CoreData
 
 enum CoreDataError: Error {
     case notFound
+    case notAuth
 }
 
 protocol UserCoreData {
@@ -215,7 +216,7 @@ final class CoreDataManager: UserCoreData {
     func asyncCreateTask(_ value: TaskEntity, completion: @escaping (Result<(TaskModel?, Date?), CoreDataError>) -> ()) {
 
         DispatchQueue.global().async {
-            guard let user = self.currenUser else { return completion(.failure(.notFound)) }
+            guard let user = self.currenUser else { return completion(.failure(.notAuth)) }
             var day = user.days.first(where: { $0.date == self.dateTimeHelper.startOfDay(for: value.taskTime) })
             if day == nil {
                 day = Day(context: self.viewContext)
@@ -296,13 +297,9 @@ final class CoreDataManager: UserCoreData {
         }
     }
 
-    func fetchTaskForDate(for date: Date, completion: @escaping ([TaskModel]) ->()) {
+    func asyncFetchTaskForDate(for date: Date, completion: @escaping (Result<[TaskModel], CoreDataError>) ->()) {
         DispatchQueue.global().async {
-            guard let user = self.currenUser else {
-                return DispatchQueue.main.async {
-                    completion([])
-                }
-            }
+            guard let user = self.currenUser else { return completion(.failure(.notAuth)) }
             let startOfDay = self.dateTimeHelper.startOfDay(for: date)
             let fetchRequest: NSFetchRequest<Day> = Day.fetchRequest()
 
@@ -311,14 +308,10 @@ final class CoreDataManager: UserCoreData {
             do {
                 let result = try self.viewContext.fetch(fetchRequest).first?.tasks ?? []
                 let tasksArray = Array(result)
-                DispatchQueue.main.async {
-                    completion(tasksArray)
-                }
+                completion(.success(tasksArray))
             } catch {
                 print("Error fetching tasks: \(error)")
-                DispatchQueue.main.async {
-                    completion([])
-                }
+                completion(.failure(.notFound))
             }
         }
     }

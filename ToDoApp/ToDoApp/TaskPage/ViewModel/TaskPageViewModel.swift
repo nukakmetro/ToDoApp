@@ -103,28 +103,43 @@ extension TaskPageViewModel: TaskPageInput {
         state = .loading
 
         if task.id == 0 {
-            coreDataManager.createTask(task) { [weak self] _, date in
-                self?.update(date: date)
+            coreDataManager.asyncCreateTask(task) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success((_, let date)):
+                    self.mainAsyncUpdate(date: date)
+                case .failure(_):
+                    break
+                }
             }
         } else {
-            coreDataManager.updateTask(task) { [weak self] _, date in
-                self?.update(date: date)
+            coreDataManager.asyncUpdateTask(task) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success((_, let date)):
+                    self.mainAsyncUpdate(date: date)
+                case .failure(_):
+                    break
+                }
             }
         }
     }
 
-    private func update(date: Date?) {
+    private func mainAsyncUpdate(date: Date?) {
         guard let date = date else { return }
         var i = 0
         while i < 3 {
-            if days[i].date == dataMapper.getStartOfDay(for: date) {
-                days[i].update = true
-                state = .content(display: days)
-                days[i].update = false
+            if self.days[i].date == self.dataMapper.getStartOfDay(for: date) {
+
+                DispatchQueue.main.async {
+                    self.days[i].update = true
+                    self.state = .content(display: self.days)
+                    self.days[i].update = false
+                }
+
                 break
             }
             i += 1
         }
     }
-
 }

@@ -82,14 +82,16 @@ final class DayViewModel: DayViewModeling {
     }
     private func processedTappedDelete(_ id: Int, _ index: Int) {
         state = .loading
-        coreDataManager.deleteTask(id: id) { [weak self] result in
+        self.coreDataManager.asyncDeleteTask(id: id) { [weak self] result in
             guard let self = self else { return }
 
-            if result {
-                days.remove(at: index)
-                state = .content(display: days)
-            } else {
-                getDay(date)
+            DispatchQueue.main.async {
+                if result {
+                    self.days.remove(at: index)
+                    self.state = .content(display: self.days)
+                } else {
+                    self.getDay(self.date)
+                }
             }
         }
     }

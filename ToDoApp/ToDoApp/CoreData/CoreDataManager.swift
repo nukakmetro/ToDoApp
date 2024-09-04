@@ -8,6 +8,10 @@
 import Foundation
 import CoreData
 
+enum CoreDataError: Error {
+    case notFound
+}
+
 protocol UserCoreData {
     func createUser() -> UserModel
     func fetchUser(id: Int, completion: @escaping (UserModel?) -> ())
@@ -181,9 +185,10 @@ final class CoreDataManager: UserCoreData {
         return task
     }
 
-    func updateTask(_ value: TaskEntity, completion: @escaping (TaskModel?, Date?) -> ()) {
+    func asyncUpdateTask(_ value: TaskEntity, completion: @escaping (Result<(TaskModel, Date), CoreDataError>) -> ()) {
 
         DispatchQueue.global().async {
+
             let fetch = TaskModel.fetchRequest()
             fetch.predicate = NSPredicate(format: "id == %d", value.id)
             let task = try? self.viewContext.fetch(fetch).first
@@ -192,9 +197,7 @@ final class CoreDataManager: UserCoreData {
                 let _ = self.currenUser,
                 let task = task
             else {
-                return DispatchQueue.main.async {
-                    completion(nil, nil)
-                }
+                return completion(.failure(.notFound))
             }
             task.taskTime = value.isTime ? value.taskTime : nil
             task.body = value.body
@@ -204,23 +207,15 @@ final class CoreDataManager: UserCoreData {
             fetchDay.predicate = NSPredicate(format: "ANY tasks == %@", task)
             let day = try? self.viewContext.fetch(fetchDay).first
 
-            DispatchQueue.main.async {
-                completion(task, day?.date)
-            }
-
+            guard let date = day?.date else { return completion(.failure(.notFound)) }
+            completion(.success((task, date)))
         }
     }
 
-    func createTask(_ value: TaskEntity, completion: @escaping (TaskModel?, Date?) -> ()) {
+    func asyncCreateTask(_ value: TaskEntity, completion: @escaping (Result<(TaskModel?, Date?), CoreDataError>) -> ()) {
 
         DispatchQueue.global().async {
-            guard
-                let user = self.currenUser
-            else {
-                return DispatchQueue.main.async {
-                    completion(nil, nil)
-                }
-            }
+            guard let user = self.currenUser else { return completion(.failure(.notFound)) }
             var day = user.days.first(where: { $0.date == self.dateTimeHelper.startOfDay(for: value.taskTime) })
             if day == nil {
                 day = Day(context: self.viewContext)
@@ -237,9 +232,9 @@ final class CoreDataManager: UserCoreData {
             day?.addToTasks(task)
             self.saveContext()
 
-            DispatchQueue.main.async {
-                completion(task, day?.date)
-            }
+            guard let date = day?.date else { return completion(.failure(.notFound)) }
+
+            completion(.success((task, date)))
         }
     }
 
@@ -261,7 +256,7 @@ final class CoreDataManager: UserCoreData {
         }
     }
 
-    func deleteTask(id: Int, completion: @escaping (Bool) -> ()) {
+    func asyncDeleteTask(id: Int, completion: @escaping (Bool) -> ()) {
         DispatchQueue.global().async {
             let fetch = TaskModel.fetchRequest()
             fetch.predicate = NSPredicate(format: "id == %d", id)
@@ -276,9 +271,7 @@ final class CoreDataManager: UserCoreData {
             }
             self.viewContext.delete(task)
             self.saveContext()
-            DispatchQueue.main.async {
-                completion(true)
-            }
+            completion(true)
         }
     }
 
